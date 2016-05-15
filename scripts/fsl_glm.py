@@ -2,7 +2,7 @@ import subprocess
 import shlex
 import os
 import numpy as np
-import scripts.process.fsl_mask as fm
+import fsl_mask as fm
 from math import factorial
 
 def run_glm(proc_dirs, design, tr):

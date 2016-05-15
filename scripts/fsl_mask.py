@@ -17,7 +17,7 @@ def select_roi_mask(roi_name='Primary motor cortex BA4p L',
     atlas_dir = FSLDIR + '/data/atlases/' + atlas + '.xml'
     atlas_img = (FSLDIR + '/data/atlases/' + atlas
                  + '/' + atlas + atlas_spec + '.nii.gz')
-    cmd = (os.getcwd() + '/scripts/process/select_roi_mask.sh -r \"'
+    cmd = (os.getcwd() + '/scripts/select_roi_mask.sh -r \"'
            + roi_name + '\" -a '
            + atlas_dir + ' -i ' + atlas_img + ' -o ' + out_img)
     run_bash(cmd)
@@ -57,7 +57,7 @@ def sub_mask(in_mask_1,
 def extract_roi(in_img,
                 out_txt,
                 in_mask):
-    cmd = (os.getcwd() + '/scripts/process/extract_roi.sh -i ' + in_img
+    cmd = (os.getcwd() + '/scripts/extract_roi.sh -i ' + in_img
            + ' -o ' + out_txt
            + ' -m ' + in_mask)
     run_bash(cmd)
@@ -73,36 +73,36 @@ def fs_extract_brain(rai_img,
 
 def gen_all_masks(dirs, roi_names):
     # set reference ROI names (in Juelich probability maps)
-    for area,name in roi_names.iteritems():
-        select_roi_mask(roi_name=name,
-                        out_img=dirs['ref'] + '/' + area + '_std')
+    #for area,name in roi_names.iteritems():
+    #    select_roi_mask(roi_name=name,
+    #                    out_img=dirs['ref'] + '/' + area + '_std')
 
-    fa.gen_struct_brain(in_struct=dirs['rai'],
-                        out_struct=dirs['rai']+'_brain',
-                        extra_params=' -B')
+    #fa.gen_struct_brain(in_struct=dirs['rai'],
+    #                    out_struct=dirs['rai']+'_brain',
+    #                    extra_params=' -B')
     # generate std to rai
-    fa.gen_struct2struct(in_struct=dirs['std'],
-                         ref_struct=dirs['rai']+'_brain',
-                         in_name='std',
-                         ref_name='rai',
-                         outdir=dirs['ref'])
+    #fa.gen_struct2struct(in_struct=dirs['std'],
+    #                     ref_struct=dirs['rai']+'_brain',
+    #                     in_name='std',
+    #                     ref_name='rai',
+    #                     outdir=dirs['ref'])
 
-    fa.gen_bold2struct(in_bold=dirs['rfi']+'_brain',
-                       ref_struct=dirs['rai']+'_brain',
-                       in_name='rfi',
-                       ref_name='rai',
-                       outdir=dirs['ref'])
+    #fa.gen_bold2struct(in_bold=dirs['rfi']+'_brain',
+    #                   ref_struct=dirs['rai']+'_brain',
+    #                   in_name='rfi',
+    #                   ref_name='rai',
+    #                   outdir=dirs['ref'])
 
-    fa.add_align(align1=(dirs['ref']+'/rfi2rai.mat'),
-                 align2=(dirs['ref']+'/rai2std.mat'),
-                 namefirst='rfi',
-                 namelast='std',
-                 outdir=dirs['ref'])
+    #fa.add_align(align1=(dirs['ref']+'/rfi2rai.mat'),
+    #             align2=(dirs['ref']+'/rai2std.mat'),
+    #             namefirst='rfi',
+    #             namelast='std',
+    #             outdir=dirs['ref'])
     # warp rai into rfi space
-    fa.apply_align(dirs['rai'],
-                   dirs['rai'] + '_rfi',
-                   align_mat=(dirs['ref']+'/rai2rfi.mat'),
-                   ref_img=dirs['rfi'])
+    #fa.apply_align(dirs['rai'],
+    #               dirs['rai'] + '_rfi',
+    #               align_mat=(dirs['ref']+'/rai2rfi.mat'),
+    #               ref_img=dirs['rfi'])
 
     thresh = 20
     for area,name in roi_names.iteritems():
@@ -111,20 +111,20 @@ def gen_all_masks(dirs, roi_names):
                        base_roi + '_rfi',
                        align_mat=(dirs['ref']+'/std2rfi.mat'),
                        ref_img=dirs['rfi'])
-        fm.thresh_bin(base_roi + '_rfi',
-                      base_roi,
-                      thr=thresh)
+        thresh_bin(base_roi + '_rfi',
+                   base_roi,
+                   thr=str(thresh))
 
     # add logic to 
     # base_roi = (dirs['ref'] + '/')
-    # fm.add_mask(base_roi + 'v1_l',
-    #             base_roi + 'v1_r',
-    #             base_roi + 'v1')
+    # add_mask(base_roi + 'v1_l',
+    #          base_roi + 'v1_r',
+    #          base_roi + 'v1')
     
     # base_roi = (dirs['ref'] + '/')
-    # fm.add_mask(base_roi + 'v1_l_fov',
-    #             base_roi + 'v1_r_fov',
-    #             base_roi + 'v1_fov')
+    # add_mask(base_roi + 'v1_l_fov',
+    #          base_roi + 'v1_r_fov',
+    #          base_roi + 'v1_fov')
 
 def proc_rois(dirs):
     # set reference ROI names (in Juelich probability maps)
@@ -173,16 +173,16 @@ def proc_rois(dirs):
                        base_roi + '_rfi',
                        align_mat=(dirs['ref']+'/std2rfi.mat'),
                        ref_img=dirs['rfi'])
-        fm.thresh_bin(base_roi + '_rfi',
-                      base_roi,
-                      thr=thresh)
+        thresh_bin(base_roi + '_rfi',
+                   base_roi,
+                   thr=thresh)
 
     base_roi = (dirs['ref'] + '/')
-    fm.add_mask(base_roi + 'v1_l',
-                base_roi + 'v1_r',
-                base_roi + 'v1')
+    add_mask(base_roi + 'v1_l',
+             base_roi + 'v1_r',
+             base_roi + 'v1')
     
     base_roi = (dirs['ref'] + '/')
-    fm.add_mask(base_roi + 'v1_l_fov',
-                base_roi + 'v1_r_fov',
-                base_roi + 'v1_fov')
+    add_mask(base_roi + 'v1_l_fov',
+             base_roi + 'v1_r_fov',
+             base_roi + 'v1_fov')

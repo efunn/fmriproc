@@ -24,13 +24,13 @@ def gen_attr(label_dict,base_labels,out_dir,len_block,offset):
                 f.write(label_dict[out_labels[run][tr]]+  ' ' + str(chunk) + '\n')
 
 
-def preproc_seqlearn_mvpa(base_dir='/belly/staged-sim-nfb-001', roi_name='m1p_l'):
+def preproc_seqlearn_mvpa(base_dir='/belly/20160427-seqlearn-001', roi_name='m1p_l'):
     out_dir = base_dir + '/ref'
     label_dict = {0: 'rest',
-                  1: '[1  4  5  3  2]',
-                  2: '[2  3  1  5  4]',
-                  3: '[3  5  2  1  4]',
-                  4: '[4  3  5  1  2]'}
+                  1: '[14532]',
+                  2: '[23154]',
+                  3: '[35214]',
+                  4: '[43512]'}
     base_labels = np.array([[0,2,1,4,3,3,0,1,4,2,1,2,3,4,0,4,3,2,1,0],
                             [0,4,2,3,1,1,0,3,2,4,3,0,4,1,2,4,3,0,1,2],
                             [3,2,0,1,4,1,2,4,3,0,0,2,4,1,3,0,2,1,4,3],

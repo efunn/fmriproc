@@ -2,8 +2,9 @@
 # working mvpa here
 #################
 from mvpa2.suite import *
-basedir = '/belly/staged-sim-nfb-001/ref'
-ds = h5load(basedir + '/2deg10deg.hdf5')
+basedir = '/belly/20160427-seqlearn-001/ref'
+ds = h5load(basedir + '/m1p_l.hdf5')
+ds = h5load(basedir + '/pmd_l.hdf5')
 ds = h5load(basedir + '/glm_2deg10deg.hdf5')
 # ds = h5load(basedir + '/v1v2.hdf5')
 
@@ -14,6 +15,7 @@ averager = mean_group_sample(['targets', 'chunks'])
 ds_avg = ds.get_mapped(averager)
 
 clf = LinearCSVMC()
+clf = SMLR(fit_all_weights=True, lm=.25)
 cvte = CrossValidation(clf, NFoldPartitioner(),
                        errorfx=lambda p, t: np.mean(p == t),
                        enable_ca=['stats']) 

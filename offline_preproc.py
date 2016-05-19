@@ -11,9 +11,9 @@ def preproc_std(base_dir='/belly/20160427-seqlearn-001',
     dirs = define_dirs(base_dir, num_runs)
 
     # extract brain from rai 
-    fp.fs_extract_brain(rai_img=dirs['rai'],
-                        subj_id=dirs['fs_subj_id'],
-                        subj_dir=dirs['fs_subj'])
+    # fp.fs_extract_brain(rai_img=dirs['rai'],
+    #                     subj_id=dirs['fs_subj_id'],
+    #                     subj_dir=dirs['fs_subj'])
 
     # motion correct middle run, bet middle run
     # then motion correct each run to rfi, then bet each run

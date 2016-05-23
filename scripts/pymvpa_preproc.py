@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from mvpa2.suite import *
 
 def gen_attr(label_dict,base_labels,out_dir,len_block,offset):
@@ -22,6 +23,22 @@ def gen_attr(label_dict,base_labels,out_dir,len_block,offset):
                 # else:
                 #     chunk = 2*run+1
                 f.write(label_dict[out_labels[run][tr]]+  ' ' + str(chunk) + '\n')
+
+def seqlearn_gen_labels(base_dir='/belly/20160427-seqlearn-001',
+                        num_trials=20,
+                        num_runs=6):
+    label_dict = {'[1  4  5  3  2]':1,
+                  '[2  3  1  5  4]':2,
+                  '[3  5  2  1  4]':3,
+                  '[4  3  5  1  2]':4}
+    base_labels = np.zeros((num_runs,num_trials))
+    total_data = pd.read_csv(base_dir+'/ref/trial_data.txt')
+    for sequence,index in label_dict.iteritems():
+        current_sequence_data = total_data[total_data['sequence']==sequence]
+        for row in current_sequence_data.iterrows():
+            row = row[1]
+            base_labels[row['run']-1,row['trial']-1] = index
+    print base_labels
 
 
 def preproc_seqlearn_mvpa(base_dir='/belly/20160427-seqlearn-001', roi_name='m1p_l'):

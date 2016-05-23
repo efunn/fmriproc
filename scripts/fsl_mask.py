@@ -73,36 +73,36 @@ def fs_extract_brain(rai_img,
 
 def gen_all_masks(dirs, roi_names):
     # set reference ROI names (in Juelich probability maps)
-    #for area,name in roi_names.iteritems():
-    #    select_roi_mask(roi_name=name,
-    #                    out_img=dirs['ref'] + '/' + area + '_std')
+    for area,name in roi_names.iteritems():
+       select_roi_mask(roi_name=name,
+                       out_img=dirs['ref'] + '/' + area + '_std')
 
-    #fa.gen_struct_brain(in_struct=dirs['rai'],
-    #                    out_struct=dirs['rai']+'_brain',
-    #                    extra_params=' -B')
+    fa.gen_struct_brain(in_struct=dirs['rai'],
+                       out_struct=dirs['rai']+'_brain',
+                       extra_params=' -B')
     # generate std to rai
-    #fa.gen_struct2struct(in_struct=dirs['std'],
-    #                     ref_struct=dirs['rai']+'_brain',
-    #                     in_name='std',
-    #                     ref_name='rai',
-    #                     outdir=dirs['ref'])
+    fa.gen_struct2struct(in_struct=dirs['std'],
+                        ref_struct=dirs['rai']+'_brain',
+                        in_name='std',
+                        ref_name='rai',
+                        outdir=dirs['ref'])
 
-    #fa.gen_bold2struct(in_bold=dirs['rfi']+'_brain',
-    #                   ref_struct=dirs['rai']+'_brain',
-    #                   in_name='rfi',
-    #                   ref_name='rai',
-    #                   outdir=dirs['ref'])
+    fa.gen_bold2struct(in_bold=dirs['rfi']+'_brain',
+                      ref_struct=dirs['rai']+'_brain',
+                      in_name='rfi',
+                      ref_name='rai',
+                      outdir=dirs['ref'])
 
-    #fa.add_align(align1=(dirs['ref']+'/rfi2rai.mat'),
-    #             align2=(dirs['ref']+'/rai2std.mat'),
-    #             namefirst='rfi',
-    #             namelast='std',
-    #             outdir=dirs['ref'])
+    fa.add_align(align1=(dirs['ref']+'/rfi2rai.mat'),
+                align2=(dirs['ref']+'/rai2std.mat'),
+                namefirst='rfi',
+                namelast='std',
+                outdir=dirs['ref'])
     # warp rai into rfi space
-    #fa.apply_align(dirs['rai'],
-    #               dirs['rai'] + '_rfi',
-    #               align_mat=(dirs['ref']+'/rai2rfi.mat'),
-    #               ref_img=dirs['rfi'])
+    fa.apply_align(dirs['rai'],
+                  dirs['rai'] + '_rfi',
+                  align_mat=(dirs['ref']+'/rai2rfi.mat'),
+                  ref_img=dirs['rfi'])
 
     thresh = 20
     for area,name in roi_names.iteritems():

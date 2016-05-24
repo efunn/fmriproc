@@ -38,7 +38,7 @@ def seqlearn_gen_labels(base_dir='/belly/20160427-seqlearn-001',
         for row in current_sequence_data.iterrows():
             row = row[1]
             base_labels[row['run']-1,row['trial']-1] = index
-    print base_labels
+    return base_labels
 
 
 def preproc_seqlearn_mvpa(base_dir='/belly/20160427-seqlearn-001', roi_name='m1p_l'):

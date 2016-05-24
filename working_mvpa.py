@@ -2,7 +2,7 @@
 # working mvpa here
 #################
 from mvpa2.suite import *
-basedir = '/belly/20160427-seqlearn-001/ref'
+basedir = '/belly/20160502-seqlearn-002/ref'
 ds = h5load(basedir + '/m1p_l.hdf5')
 ds = h5load(basedir + '/pmd_l.hdf5')
 ds = h5load(basedir + '/glm_2deg10deg.hdf5')
